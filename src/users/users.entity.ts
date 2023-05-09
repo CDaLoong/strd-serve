@@ -1,7 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
-@Entity({ name: 'users' }) // 通过 name 属性指定实体对应的数据库表名
-export class Users {
+@Entity('users') // 通过 name 属性指定实体对应的数据库表名
+export class User {
   @PrimaryGeneratedColumn({ name: 'id' }) // 通过 name 属性指定列名
   id: number // ID
 
@@ -26,9 +32,9 @@ export class Users {
   @Column({ name: 'email' })
   email: string // 邮箱
 
-  @Column({ name: 'created_at' })
-  created_at: string // 创建时间
+  @CreateDateColumn({ name: 'created_at', type: 'datetime' })
+  created_at: Date // 创建时间
 
-  @Column({ name: 'updated_at' })
-  updated_at: string // 更新时间
+  @UpdateDateColumn({ name: 'updated_at', type: 'datetime' })
+  updated_at: Date // 更新时间
 }
