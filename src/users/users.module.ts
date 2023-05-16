@@ -8,5 +8,6 @@ import { User } from './users.entity'
   imports: [TypeOrmModule.forFeature([User], 'DATA_MYSQL')],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

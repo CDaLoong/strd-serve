@@ -14,6 +14,9 @@ export class User {
   @Column({ name: 'name' })
   name: string // 昵称
 
+  @Column({ name: 'username' })
+  username: string // 用户名称，唯一
+
   @Column({ name: 'password' })
   password: string // 密码
 

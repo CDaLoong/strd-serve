@@ -1,11 +1,44 @@
-import { Module } from '@nestjs/common'
-import { DatabaseModule } from './database/database.module'
+import {
+  Module,
+  NestModule,
+  RequestMethod,
+  MiddlewareConsumer,
+} from '@nestjs/common'
+import { APP_PIPE, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core'
+import { DatabaseModule } from './common/database/database.module'
 import { UsersModule } from './users/users.module'
-import { ArticlesModule } from './articles/articles.module';
-import { CommentsModule } from './comments/comments.module';
-import { LikesModule } from './likes/likes.module';
-
+import { ArticlesModule } from './articles/articles.module'
+import { CommentsModule } from './comments/comments.module'
+import { LikesModule } from './likes/likes.module'
+import { AuthModule } from './auth/auth.module'
+import { LoggerMiddleware } from './common/middleware/logger.middleware'
+import { HttpExceptionFilter } from './common/error/http-exception.filter'
+import { GlobalInterceptor } from './common/interceptor/global.interceptor'
 @Module({
-  imports: [DatabaseModule, UsersModule, ArticlesModule, CommentsModule, LikesModule],
+  imports: [
+    DatabaseModule,
+    AuthModule,
+    UsersModule,
+    ArticlesModule,
+    CommentsModule,
+    LikesModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: GlobalInterceptor,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      // .exclude({ path: 'users/getAllUser', method: RequestMethod.GET })
+      .forRoutes('users', 'articles')
+  }
+}
