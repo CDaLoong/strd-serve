@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { User } from 'src/users/users.entity'
 
 @Entity('likes') // 通过 name 属性指定实体对应的数据库表名
 export class Like {

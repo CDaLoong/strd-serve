@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Query, Body } from '@nestjs/common'
 import { ArticlesService } from './articles.service'
-import { Article, ArticleType } from './articles.entity'
+import { Article, ArticleType } from 'src/entity/articles.entity'
 
 @Controller('articles')
 export class ArticlesController {

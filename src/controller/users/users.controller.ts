@@ -12,7 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
-import { User } from './users.entity'
+import { User } from 'src/entity/users.entity'
 import * as bcrypt from 'bcrypt'
 // import { LocalAuthGuard } from '../auth/local-auth.guard'
 // import { GetUserByIdParames } from './users.dto'

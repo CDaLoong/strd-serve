@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { User } from 'src/users/users.entity'
-import { Comment } from 'src/comments/comments.entity'
-import { Article, ArticleType } from 'src/articles/articles.entity'
-import { Like } from 'src/likes/likes.entity'
+import { User } from 'src/entity/users.entity'
+import { Comment } from 'src/entity/comments.entity'
+import { Article, ArticleType } from 'src/entity/articles.entity'
+import { Like } from 'src/entity/likes.entity'
 
 @Module({
   imports: [
