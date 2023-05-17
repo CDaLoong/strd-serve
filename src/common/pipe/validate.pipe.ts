@@ -13,7 +13,6 @@ export class ValidationPipe implements PipeTransform<any> {
   // 为实现 PipeTransfrom，每个管道必须声明 transfrom() 方法
   // value 参数是当前处理的方法参数(在被路由处理程序方法接收之前)，metadata 是当前处理的方法参数的元数据
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    console.log(12344, value, metatype)
     if (!metatype || !this.toValidate(metatype)) {
       return value
     }

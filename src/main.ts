@@ -3,11 +3,30 @@ import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
 import * as passport from 'passport'
 import { Logger } from '@nestjs/common'
+// import * as csurf from 'csurf'
+import rateLimit from 'express-rate-limit'
+import * as session from 'express-session'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import { AllExceptionsFilter } from './common/error/global-exception.filter'
 import { GlobalInterceptor } from './common/interceptor/global.interceptor'
+import { jwtConstants } from './controller/auth/constants'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  app.set('trust proxy', 1)
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100, // limit each IP to 100 requests per windowMs
+    }),
+  )
+  app.use(
+    session({
+      secret: jwtConstants.secret,
+      resave: false,
+      saveUninitialized: true,
+    }),
+  )
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalInterceptors(new GlobalInterceptor())
   app.use(passport.initialize())
@@ -15,6 +34,7 @@ async function bootstrap() {
   app.useLogger(new Logger())
   app.useGlobalFilters(new AllExceptionsFilter())
   app.enableCors() // 启用 CORS
+  // app.use(csurf())
   await app.listen(9527)
 }
 bootstrap().then(() => {
