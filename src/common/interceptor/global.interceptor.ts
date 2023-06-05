@@ -11,7 +11,6 @@ import { map, tap } from 'rxjs/operators'
 export class GlobalInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     console.log('Before...')
-
     const now = Date.now()
     const isCached = false
     // 走缓存

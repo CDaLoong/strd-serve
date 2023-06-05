@@ -41,7 +41,7 @@ export class ArticlesController {
     article.user_id = Number.parseInt(body.user_id)
     article.type = body.type
     article.title = body.title
-    article.tile_desc = body.tile_desc
+    article.description = body.description
     article.content = JSON.stringify(body.content)
     return this.articlesService.addArticle(article)
   }

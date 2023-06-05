@@ -21,16 +21,19 @@ export class AuthService {
 
   // 生成token
   async login(user: any) {
-    const payload = { username: user.name, sub: user.id }
+    const payload = { username: user.username, sub: user.id }
     return {
+      username: user.username,
       access_token: this.jwtService.sign(payload),
     }
   }
 
+  // 密码加密
   async hashPassword(password: string): Promise<string> {
     return bcrypt.hashSync(password, 10)
   }
 
+  // 校验密码
   async comparePasswords(
     password: string,
     hashedPassword: string,

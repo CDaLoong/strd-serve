@@ -3,12 +3,10 @@ import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
 import * as passport from 'passport'
 import { Logger } from '@nestjs/common'
-// import * as csurf from 'csurf'
 import rateLimit from 'express-rate-limit'
 import * as session from 'express-session'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { AllExceptionsFilter } from './common/error/global-exception.filter'
-import { GlobalInterceptor } from './common/interceptor/global.interceptor'
 import { jwtConstants } from './controller/auth/constants'
 
 async function bootstrap() {
@@ -28,13 +26,11 @@ async function bootstrap() {
     }),
   )
   app.useGlobalPipes(new ValidationPipe())
-  app.useGlobalInterceptors(new GlobalInterceptor())
   app.use(passport.initialize())
   // 设置日志记录器（例如 Winston）
   app.useLogger(new Logger())
   app.useGlobalFilters(new AllExceptionsFilter())
   app.enableCors() // 启用 CORS
-  // app.use(csurf())
   await app.listen(9527)
 }
 bootstrap().then(() => {

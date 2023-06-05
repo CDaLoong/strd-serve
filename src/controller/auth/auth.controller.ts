@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common'
 import { Response } from 'express'
 import * as svgCaptcha from 'svg-captcha'
-import { LocalAuthGuard, JwtAuthGuard } from './auth.guard'
+import { LocalAuthGuard } from './auth.guard'
 import { AuthService } from './auth.service'
 import { SkipAuth } from 'src/common//decorator/skipAuth'
 
@@ -32,10 +32,8 @@ export class AuthController {
     return this.authService.login(req.user)
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req: any) {
-    console.log(1234, req.user)
     return req.user
   }
 
@@ -45,8 +43,6 @@ export class AuthController {
   async getCaptcha(@Req() req: any, @Res() res: Response) {
     const captcha = svgCaptcha.create({
       charPreset: this.charPool,
-      width: 100,
-      height: 30,
       ignoreChars: '0o1i', // 忽略字符 0、o、1、i
       noise: 3, // 设置干扰线数量为 3
       color: true, // 使用随机颜色

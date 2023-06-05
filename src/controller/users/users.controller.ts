@@ -16,6 +16,7 @@ import { User } from 'src/entity/users.entity'
 import * as bcrypt from 'bcrypt'
 // import { LocalAuthGuard } from '../auth/local-auth.guard'
 // import { GetUserByIdParames } from './users.dto'
+import { SkipAuth } from 'src/common//decorator/skipAuth'
 
 @Controller('users')
 export class UsersController {
@@ -68,6 +69,7 @@ export class UsersController {
     return result
   }
   // 添加用户
+  @SkipAuth()
   @Post('/addUser')
   async addUser(@Body() body: any): Promise<object> {
     const checkUserName = await this.usersService.getUserByUsername(

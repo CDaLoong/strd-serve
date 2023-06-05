@@ -1,10 +1,5 @@
-import {
-  Module,
-  NestModule,
-  RequestMethod,
-  MiddlewareConsumer,
-} from '@nestjs/common'
-import { APP_PIPE, APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core'
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
+import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core'
 import { DatabaseModule } from './common/database/database.module'
 import { UsersModule } from './controller/users/users.module'
 import { ArticlesModule } from './controller/articles/articles.module'
@@ -44,6 +39,6 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       // .exclude({ path: 'users/getAllUser', method: RequestMethod.GET }) // 排除使用中间件的路由
-      .forRoutes('users', 'articles')
+      .forRoutes('*')
   }
 }
