@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { Article, ArticleType } from 'src/entity/articles.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-import { log } from 'console'
 
 @Injectable()
 export class ArticlesService {
@@ -52,5 +51,12 @@ export class ArticlesService {
   // 通过ID删除文章类型
   async delArticleTypeById(id: number): Promise<void> {
     await this.articleTypeRepository.delete(id)
+  }
+  // 通过ID删除文章类型
+  async findArticleTypeById(id: number): Promise<void> {
+    await this.articleTypeRepository
+      .createQueryBuilder('articleType')
+      .where('articleType.id = :id', { id: id })
+      .getOne()
   }
 }

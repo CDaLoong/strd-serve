@@ -10,7 +10,7 @@ import { Like } from 'src/entity/likes.entity'
     TypeOrmModule.forRoot({
       name: 'DATA_MYSQL', // 适配多数据库情况
       type: 'mysql',
-      host: '192.168.100.157',
+      host: '192.168.3.62',
       port: 3306,
       username: 'DaLoong',
       password: '66666688888888',

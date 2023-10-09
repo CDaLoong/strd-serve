@@ -73,4 +73,10 @@ export class ArticlesController {
     const id = Number.parseInt(body.id)
     return this.articlesService.delArticleTypeById(id)
   }
+  // 通过ID查找文章类型
+  @Post('/findArticleTypeById')
+  findArticleTypeById(@Body() body: any): Promise<void> {
+    const id = Number.parseInt(body.id)
+    return this.articlesService.findArticleTypeById(id)
+  }
 }

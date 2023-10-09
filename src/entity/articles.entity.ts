@@ -63,6 +63,9 @@ export class ArticleType {
   @Column({ name: 'label', length: 10 })
   label: string // 文章类型名称
 
+  @Column({ name: 'amount' })
+  amount: number // 文章数量
+
   @CreateDateColumn({ name: 'created_at', type: 'datetime' })
   created_at: Date // 创建时间
 
