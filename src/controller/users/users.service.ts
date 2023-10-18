@@ -1,14 +1,28 @@
-import { Injectable } from '@nestjs/common'
+import {
+  Injectable,
+  OnApplicationBootstrap,
+  OnModuleInit,
+} from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { User } from 'src/entity/users.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 
+// 实现业务逻辑，实现对数据库的增删改查
+// @Injectable  Service 是可以被注入也是可以注入到别的对象的，所以用 @Injectable 声明
 @Injectable()
-export class UsersService {
+export class UsersService implements OnModuleInit, OnApplicationBootstrap {
   constructor(
     @InjectRepository(User, 'DATA_MYSQL')
     private usersRepository: Repository<User>,
   ) {}
+
+  onModuleInit() {
+    console.log('Service OnModuleInit')
+  }
+
+  onApplicationBootstrap() {
+    console.log('Service onApplicationBootstrap')
+  }
   // 获取所有用户信息
   async getAllUser(): Promise<User[]> {
     return await this.usersRepository.find()

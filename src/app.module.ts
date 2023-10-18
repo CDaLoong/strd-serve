@@ -11,6 +11,7 @@ import { HttpExceptionFilter } from './common/error/http-exception.filter'
 import { GlobalInterceptor } from './common/interceptor/global.interceptor'
 import { JwtAuthGuard } from './controller/auth/auth.guard'
 @Module({
+  // 模块导出 provider，另一个模块需要 imports 它才能用这些 provider。
   imports: [
     DatabaseModule,
     AuthModule,
@@ -19,6 +20,7 @@ import { JwtAuthGuard } from './controller/auth/auth.guard'
     CommentsModule,
     LikesModule,
   ],
+  // 一般情况下，provider 是通过 @Injectable 声明，然后在 @Module 的 providers 数组里注册的 class
   providers: [
     {
       provide: APP_FILTER,

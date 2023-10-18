@@ -10,6 +10,8 @@ import {
   HttpException,
   ParseIntPipe,
   ValidationPipe,
+  OnModuleInit,
+  OnApplicationBootstrap,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { User } from 'src/entity/users.entity'
@@ -18,9 +20,19 @@ import * as bcrypt from 'bcrypt'
 // import { GetUserByIdParames } from './users.dto'
 import { SkipAuth } from 'src/common//decorator/skipAuth'
 
+// 接收 http 请求，调用 Service，返回响应
+// @Controller Controller 只需要被注入，所以 nest 单独加了 @Controller 的装饰器
 @Controller('users')
-export class UsersController {
+export class UsersController implements OnModuleInit, OnApplicationBootstrap {
   constructor(private usersService: UsersService) {}
+
+  onModuleInit() {
+    console.log('Controller OnModuleInit')
+  }
+
+  onApplicationBootstrap() {
+    console.log('Controller onApplicationBootstrap')
+  }
 
   @Get('/getAllUser')
   async getAllUser(): Promise<object[]> {
